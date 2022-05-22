@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">StoryAppCarita</string>
+    <string name="content_desc_logo_app">Logo aplikasi carita</string>
+    <string name="content_desc_image">Gambar halaman landing</string>
+    <string name="welcome_app">Selamat Datang Di Carita</string>
+    <string name="desc_landing">Carita adalah platform social media \nterbaru, kamu bisa share “carita” mu \ndisini!</string>
+    <string name="register">daftar</string>
+    <string name="login">masuk</string>
+    <string name="name">Nama</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+</resources>
