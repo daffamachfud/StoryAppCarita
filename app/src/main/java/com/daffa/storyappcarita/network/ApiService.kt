@@ -12,7 +12,7 @@ import retrofit2.http.*
 class ApiService {
 
     companion object {
-        const val URL_END_POINT = "https://story-api.dicoding.dev/v1"
+        const val URL_END_POINT = "https://story-api.dicoding.dev/v1/"
     }
 
     data class ResponseService(
@@ -24,11 +24,11 @@ class ApiService {
 
     interface ApiService {
         @FormUrlEncoded
-        @POST("/register")
+        @POST("register")
         fun register(
             @Field("name") name: String,
             @Field("email") email: String,
-            @Field("password ") password: String
+            @Field("password") password: String
         ): Call<ResponseService>
 
         @FormUrlEncoded

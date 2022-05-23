@@ -2,19 +2,20 @@ package com.daffa.storyappcarita.view.customview
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
+import com.daffa.storyappcarita.R
 
 class CustomEditTextPassword : AppCompatEditText, View.OnTouchListener {
+    private lateinit var imageLock: Drawable
 
-    private var isFillPassword = false
-
-    constructor(context: Context): super(context) {
+    constructor(context: Context) : super(context) {
         init()
     }
 
@@ -22,37 +23,58 @@ class CustomEditTextPassword : AppCompatEditText, View.OnTouchListener {
         init()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         init()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
-        if(!isFillPassword){
-            error = "Masukan password lebih dari 6 huruf"
-        }
+        setButtonDrawables(startOfTheText = imageLock)
+        setPadding(32, 48, 32, 48)
+        addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (text.toString().length <= 6 && text!!.isNotEmpty()) {
+                    error = "Masukan password lebih dari 6 karakter"
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
     }
+
     override fun onTouch(v: View?, event: MotionEvent): Boolean {
         return false
     }
 
-    private fun init(){
+    private fun init() {
         setOnTouchListener(this)
-
-        addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Do nothing.
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                //set edit text harus lebih dari 6 karakter
-                isFillPassword = s.length >= 6
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                // Do nothing.
-            }
-        })
+        imageLock = ContextCompat.getDrawable(context, R.drawable.ic_baseline_lock_24) as Drawable
     }
+
+    private fun setButtonDrawables(
+        startOfTheText: Drawable? = null,
+        topOfTheText: Drawable? = null,
+        endOfTheText: Drawable? = null,
+        bottomOfTheText: Drawable? = null
+    ) {
+        // Sets the Drawables (if any) to appear to the left of,
+        // above, to the right of, and below the text.
+        compoundDrawablePadding = 42
+        setCompoundDrawablesWithIntrinsicBounds(
+            startOfTheText,
+            topOfTheText,
+            endOfTheText,
+            bottomOfTheText
+        )
+    }
+
 }

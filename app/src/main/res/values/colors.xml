@@ -10,5 +10,7 @@
     <color name="primary">#3F5AF9</color>
     <color name="secondary">#4A65FA</color>
     <color name="text_title">#201365</color>
-
+    <color name="grey_dark">#aaa</color>
+    <color name="grey_darker">#464646</color>
+    <color name="grey_1">#676767</color>
 </resources>
