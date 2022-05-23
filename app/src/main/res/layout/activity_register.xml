@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/registerimage"
         android:layout_marginTop="24dp"
+        android:contentDescription="@string/content_desc_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoCarita" />
@@ -55,13 +56,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:startIconDrawable="@drawable/ic_baseline_person_24" >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.daffa.storyappcarita.view.customview.CustomEditTextPassword
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            app:passwordToggleEnabled="true" />
+            android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
