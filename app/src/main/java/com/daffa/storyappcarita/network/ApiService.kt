@@ -1,5 +1,7 @@
 package com.daffa.storyappcarita.network
 
+import com.daffa.storyappcarita.model.LoginResponse
+import com.daffa.storyappcarita.model.StoriesResponse
 import com.google.gson.annotations.SerializedName
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -32,25 +34,24 @@ class ApiService {
         ): Call<ResponseService>
 
         @FormUrlEncoded
-        @POST("/login")
+        @POST("login")
         fun login(
             @Field("email") email: String,
-            @Field("password ") password: String
-        ): Call<ResponseService>
+            @Field("password") password: String
+        ): Call<LoginResponse>
 
         @Multipart
-        @POST("/stories")
+        @POST("stories")
         fun addStory(
             @Header("Authorization") authorization: String,
-            @Header("Content-Type") contentType: String,
             @Part file: MultipartBody.Part,
             @Part("description") description: String
         ): Call<ResponseService>
 
-        @GET("/stories")
+        @GET("stories")
         fun getStories(
-            @Header("Authorization") authorization: String
-        ): Call<ResponseService>
+            @Header("Authorization") authHeader: String
+        ): Call<StoriesResponse>
     }
 
     class ApiConfig {

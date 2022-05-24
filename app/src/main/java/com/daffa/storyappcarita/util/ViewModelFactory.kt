@@ -2,9 +2,8 @@ package com.daffa.storyappcarita.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.daffa.storyappcarita.model.UserPreference
 import com.daffa.storyappcarita.view.main.MainViewModel
-import com.daffa.storyappcarita.view.register.RegisterViewModel
+import com.daffa.storyappcarita.view.login.UserViewModel
 
 class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.NewInstanceFactory() {
 
@@ -14,8 +13,8 @@ class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.New
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(pref) as T
             }
-            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
-                RegisterViewModel(pref) as T
+            modelClass.isAssignableFrom(UserViewModel::class.java) -> {
+                UserViewModel(pref) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

@@ -1,35 +1,28 @@
 package com.daffa.storyappcarita.view.register
 
-import android.content.Context
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import com.daffa.storyappcarita.R
 import com.daffa.storyappcarita.databinding.ActivityRegisterBinding
-import com.daffa.storyappcarita.model.UserModel
-import com.daffa.storyappcarita.model.UserPreference
 import com.daffa.storyappcarita.network.ApiService
 import com.daffa.storyappcarita.util.Utils
-import com.daffa.storyappcarita.util.ViewModelFactory
-import com.daffa.storyappcarita.view.main.MainActivity
+import com.daffa.storyappcarita.view.login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var viewModel: RegisterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,14 +31,15 @@ class RegisterActivity : AppCompatActivity() {
 
         initView()
         initAction()
-        initViewModel()
+        initAnimation()
     }
 
-    private fun initViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
-        )[RegisterViewModel::class.java]
+    private fun initAnimation() {
+        ObjectAnimator.ofFloat(binding.imgRegister, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
     }
 
     private fun initAction() {
@@ -65,24 +59,35 @@ class RegisterActivity : AppCompatActivity() {
                     binding.passwordEditText.error = "Masukkan password"
                 }
                 else -> {
-                    Utils.LoadingScreen.displayLoadingWithText(this@RegisterActivity,"Tunggu Dulu Yah",false)
+                    Utils.LoadingScreen.displayLoadingWithText(
+                        this@RegisterActivity,
+                        "Tunggu Dulu Yah",
+                        false
+                    )
                     ApiService.ApiConfig().getApiService().register(name, email, password).enqueue(
-                        object: Callback<ApiService.ResponseService>{
+                        object : Callback<ApiService.ResponseService> {
                             override fun onResponse(
                                 call: Call<ApiService.ResponseService>,
                                 response: Response<ApiService.ResponseService>
                             ) {
                                 Utils.LoadingScreen.hideLoading()
-                                if(response.isSuccessful){
-                                    viewModel.saveUser(UserModel(
-                                        name,email,password,true
-                                    ))
-                                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                if (response.isSuccessful) {
+                                    //finish, masukan ke halaman login
+                                    Toast.makeText(
+                                        this@RegisterActivity,
+                                        "Akun anda telah dibuat, silahkan lakukan login!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    val intent =
+                                        Intent(this@RegisterActivity, LoginActivity::class.java)
                                     startActivity(intent)
                                     finish()
-                                }else{
-
+                                } else {
+                                    Toast.makeText(
+                                        this@RegisterActivity,
+                                        "Gagal membuat akun!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }
                             }
 
@@ -91,7 +96,11 @@ class RegisterActivity : AppCompatActivity() {
                                 t: Throwable
                             ) {
                                 Utils.LoadingScreen.hideLoading()
-
+                                Toast.makeText(
+                                    this@RegisterActivity,
+                                    "Gagal membuat akun!",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
 
                         }
