@@ -20,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_baseline_keyboard_backspace_24"
-            android:contentDescription="@string/content_desc_image" />
+            android:contentDescription="@string/content_desc_image"
+            android:src="@drawable/ic_baseline_keyboard_backspace_24" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -37,10 +37,10 @@
         android:layout_width="360dp"
         android:layout_height="360dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_baseline_image_24"
-        android:scaleType="fitXY"
-        android:contentDescription="@string/content_desc_image"
         android:background="@drawable/bg_round_image_add"
+        android:contentDescription="@string/content_desc_image"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_baseline_image_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header" />
@@ -49,11 +49,11 @@
         android:id="@+id/btnGallery"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/bg_round_primary"
         android:fontFamily="@font/roboto_condensed_bold"
-        android:text="Galeri"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="48dp"
+        android:text="@string/galeri"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgAddStory" />
 
@@ -65,7 +65,7 @@
         android:layout_marginEnd="48dp"
         android:background="@drawable/bg_round_primary"
         android:fontFamily="@font/roboto_condensed_bold"
-        android:text="Kamera"
+        android:text="@string/camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgAddStory" />
 
@@ -73,14 +73,15 @@
         android:id="@+id/etDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/roboto_condensed_bold"
-        android:hint="Tulis Keterangan"
+        android:hint="@string/type_desc"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGallery" />
@@ -91,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_condensed_bold"
-        android:text="Posting"
+        android:text="@string/posting"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

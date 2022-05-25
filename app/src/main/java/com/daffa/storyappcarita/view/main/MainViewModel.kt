@@ -5,9 +5,7 @@ import androidx.lifecycle.*
 import com.daffa.storyappcarita.model.ListStoryItem
 import com.daffa.storyappcarita.model.LoginResult
 import com.daffa.storyappcarita.model.StoriesResponse
-import com.daffa.storyappcarita.model.UserModel
 import com.daffa.storyappcarita.network.ApiConfig
-import com.daffa.storyappcarita.network.ApiService
 import com.daffa.storyappcarita.util.UserPreference
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -22,20 +20,20 @@ class MainViewModel(private val pref: UserPreference) : ViewModel() {
         return pref.getUser().asLiveData()
     }
 
-    fun getStoriesFromServer(token:String): LiveData<List<ListStoryItem>>{
+    fun getStoriesFromServer(token: String): LiveData<List<ListStoryItem>> {
         ApiConfig.getApiService().getStories(token).enqueue(
-            object : Callback<StoriesResponse>{
+            object : Callback<StoriesResponse> {
                 override fun onResponse(
                     call: Call<StoriesResponse>,
                     response: Response<StoriesResponse>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         listStoryItem.postValue(response.body()?.listStory)
                     }
                 }
 
                 override fun onFailure(call: Call<StoriesResponse>, t: Throwable) {
-                    Log.e("Error Get Stories",t.message.toString())
+                    Log.e("Error Get Stories", t.message.toString())
                 }
 
             }

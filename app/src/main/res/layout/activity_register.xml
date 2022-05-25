@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="name"
-            android:hint="Masukan Nama"
+            android:hint="@string/input_name"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="emailAddress"
-            android:hint="Masukan Email"
+            android:hint="@string/input_email"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
