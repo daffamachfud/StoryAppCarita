@@ -1,4 +1,4 @@
-package com.daffa.storyappcarita.view.main
+package com.daffa.storyappcarita.ui.main
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.daffa.storyappcarita.databinding.ItemStoryAdapterBinding
 import com.daffa.storyappcarita.model.ListStoryItem
-import com.daffa.storyappcarita.view.detail.DetailActivity
+import com.daffa.storyappcarita.ui.detail.DetailActivity
 
 class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.WishViewHolder>() {
     private var list = ArrayList<ListStoryItem>()

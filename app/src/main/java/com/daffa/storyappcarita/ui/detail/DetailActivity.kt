@@ -1,4 +1,4 @@
-package com.daffa.storyappcarita.view.detail
+package com.daffa.storyappcarita.ui.detail
 
 import android.os.Bundle
 import android.widget.Toast

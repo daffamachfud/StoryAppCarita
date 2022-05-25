@@ -1,4 +1,4 @@
-package com.daffa.storyappcarita.view.add
+package com.daffa.storyappcarita.ui.add
 
 import android.Manifest
 import android.content.Intent

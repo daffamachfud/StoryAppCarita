@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.register.RegisterActivity">
+    tools:context=".ui.register.RegisterActivity">
 
     <ImageView
         android:id="@+id/logoCarita"
@@ -118,7 +118,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailTextLayout" />
 
 
-    <com.daffa.storyappcarita.view.customview.CustomEditTextPassword
+    <com.daffa.storyappcarita.ui.customview.CustomEditTextPassword
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

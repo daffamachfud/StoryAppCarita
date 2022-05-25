@@ -1,4 +1,4 @@
-package com.daffa.storyappcarita.view.customview
+package com.daffa.storyappcarita.ui.customview
 
 import android.content.Context
 import android.graphics.Canvas

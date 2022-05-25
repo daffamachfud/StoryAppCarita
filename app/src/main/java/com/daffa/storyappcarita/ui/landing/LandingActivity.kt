@@ -1,6 +1,5 @@
-package com.daffa.storyappcarita.view.landing
+package com.daffa.storyappcarita.ui.landing
 
-import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
@@ -10,8 +9,8 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.daffa.storyappcarita.databinding.ActivityLandingBinding
-import com.daffa.storyappcarita.view.login.LoginActivity
-import com.daffa.storyappcarita.view.register.RegisterActivity
+import com.daffa.storyappcarita.ui.login.LoginActivity
+import com.daffa.storyappcarita.ui.register.RegisterActivity
 
 class LandingActivity : AppCompatActivity() {
 

@@ -1,11 +1,8 @@
-package com.daffa.storyappcarita.view.login
+package com.daffa.storyappcarita.ui.login
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.daffa.storyappcarita.model.LoginResult
-import com.daffa.storyappcarita.model.UserModel
 import com.daffa.storyappcarita.util.UserPreference
 import kotlinx.coroutines.launch
 

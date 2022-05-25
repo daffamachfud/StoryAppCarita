@@ -2,8 +2,8 @@ package com.daffa.storyappcarita.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.daffa.storyappcarita.view.main.MainViewModel
-import com.daffa.storyappcarita.view.login.UserViewModel
+import com.daffa.storyappcarita.ui.main.MainViewModel
+import com.daffa.storyappcarita.ui.login.UserViewModel
 
 class ViewModelFactory(private val pref: UserPreference) : ViewModelProvider.NewInstanceFactory() {
 

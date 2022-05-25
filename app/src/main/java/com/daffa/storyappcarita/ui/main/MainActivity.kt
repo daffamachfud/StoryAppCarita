@@ -1,4 +1,4 @@
-package com.daffa.storyappcarita.view.main
+package com.daffa.storyappcarita.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffa.storyappcarita.databinding.ActivityMainBinding
 import com.daffa.storyappcarita.util.UserPreference
 import com.daffa.storyappcarita.util.ViewModelFactory
-import com.daffa.storyappcarita.view.add.StoryAddActivity
-import com.daffa.storyappcarita.view.landing.LandingActivity
+import com.daffa.storyappcarita.ui.add.StoryAddActivity
+import com.daffa.storyappcarita.ui.landing.LandingActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
