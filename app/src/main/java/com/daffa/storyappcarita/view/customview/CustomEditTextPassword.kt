@@ -5,6 +5,8 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -33,6 +35,7 @@ class CustomEditTextPassword : AppCompatEditText, View.OnTouchListener {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        transformationMethod = PasswordTransformationMethod.getInstance()
         setButtonDrawables(startOfTheText = imageLock)
         setPadding(32, 48, 32, 48)
         addTextChangedListener(object : TextWatcher {
@@ -40,8 +43,8 @@ class CustomEditTextPassword : AppCompatEditText, View.OnTouchListener {
             }
 
             override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (text.toString().length <= 6 && text!!.isNotEmpty()) {
-                    error = "Masukan password lebih dari 6 karakter"
+                if (text.toString().length < 6 && text!!.isNotEmpty()) {
+                    error = "Jumlah password kurang dari 6 karakter!"
                 }
             }
 

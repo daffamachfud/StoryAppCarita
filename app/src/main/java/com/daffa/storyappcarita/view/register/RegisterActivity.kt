@@ -4,7 +4,9 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -44,6 +46,10 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun initAction() {
+        binding.emailEditText.addTextChangedListener(textWatcher)
+        binding.nameEditText.addTextChangedListener(textWatcher)
+        binding.passwordEditText.addTextChangedListener(textWatcher)
+
         binding.btnRegister.setOnClickListener {
             val name = binding.nameEditText.text.toString()
             val email = binding.emailEditText.text.toString()
@@ -129,5 +135,37 @@ class RegisterActivity : AppCompatActivity() {
         binding.passwordEditText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
         binding.passwordEditText.textSize = 17f
         binding.passwordEditText.setHintTextColor(ContextCompat.getColor(this, R.color.grey_1))
+    }
+
+    private val textWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i2: Int, i3: Int) {}
+        override fun onTextChanged(charSequence: CharSequence, i: Int, i2: Int, i3: Int) {
+            checkFieldIsNotEmpty()
+        }
+
+        override fun afterTextChanged(editable: Editable) {}
+    }
+
+    private fun checkFieldIsNotEmpty() {
+        val email = binding.emailEditText.text.toString()
+        val name = binding.nameEditText.text.toString()
+        val password = binding.passwordEditText.text.toString()
+        when{
+            email.isEmpty() -> {
+                binding.btnRegister.isEnabled = false
+            }
+            name.isEmpty() -> {
+                binding.btnRegister.isEnabled = false
+            }
+            password.isEmpty() -> {
+                binding.btnRegister.isEnabled = false
+            }
+            password.length < 6 -> {
+                binding.btnRegister.isEnabled = false
+            }
+            else -> {
+                binding.btnRegister.isEnabled = true
+            }
+        }
     }
 }

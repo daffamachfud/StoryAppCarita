@@ -36,6 +36,7 @@ class StoryAddActivity : AppCompatActivity() {
     private var getFile: File? = null
     private var token = ""
     private var isBackCamera = false
+    private var isFromGallery = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +62,7 @@ class StoryAddActivity : AppCompatActivity() {
             openGallery()
         }
 
-        binding.btnPost.setOnClickListener { uploadImage() }
+        binding.btnPost.setOnClickListener { uploadStory() }
     }
 
     private fun getExtra() {
@@ -80,6 +81,7 @@ class StoryAddActivity : AppCompatActivity() {
             val myFile = Utils().uriToFile(selectedImg, this@StoryAddActivity)
 
             getFile = myFile
+            isFromGallery = true
 
             binding.imgAddStory.setImageURI(selectedImg)
         }
@@ -99,7 +101,7 @@ class StoryAddActivity : AppCompatActivity() {
         if (it.resultCode == CAMERA_X_RESULT) {
             val myFile = it.data?.getSerializableExtra("picture") as File
             isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
-
+            isFromGallery = false
             getFile = myFile
             val result = Utils().rotateBitmap(
                 BitmapFactory.decodeFile(getFile?.path),
@@ -137,53 +139,56 @@ class StoryAddActivity : AppCompatActivity() {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun uploadImage() {
-        if (getFile != null) {
-            val file = Utils().reduceFileImage(getFile as File, isBackCamera)
+    private fun uploadStory() {
 
-            val description = binding.etDesc.text.toString()
-            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
-                file.name,
-                requestImageFile
-            )
+        val description = binding.etDesc.text.toString()
+        when {
+            description.isEmpty() -> {
+                Toast.makeText(this@StoryAddActivity,"Isi deskripsi dari carita kamu !",Toast.LENGTH_LONG).show()
+            }
+            getFile == null -> {
+                Toast.makeText(this@StoryAddActivity,"Pilih gambar untuk carita kamu !",Toast.LENGTH_LONG).show()
+            }
+            else -> {
+                val file = Utils().reduceFileImage(getFile as File, isBackCamera,isFromGallery)
 
-            Utils.LoadingScreen.displayLoadingWithText(
-                this@StoryAddActivity,
-                "Tunggul dulu yah",
-                false
-            )
-            ApiConfig.getApiService().addStory(
-                "Bearer $token", imageMultipart, description
-            ).enqueue(object : Callback<ServiceResponse> {
-                override fun onResponse(
-                    call: Call<ServiceResponse>,
-                    response: Response<ServiceResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Utils.LoadingScreen.hideLoading()
-                        Toast.makeText(
-                            this@StoryAddActivity,
-                            "Story berhasil di upload",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        finish()
+                val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "photo",
+                    file.name,
+                    requestImageFile
+                )
+
+                Utils.LoadingScreen.displayLoadingWithText(
+                    this@StoryAddActivity,
+                    "Tunggul dulu yah",
+                    false
+                )
+                ApiConfig.getApiService().addStory(
+                    "Bearer $token", imageMultipart, description
+                ).enqueue(object : Callback<ServiceResponse> {
+                    override fun onResponse(
+                        call: Call<ServiceResponse>,
+                        response: Response<ServiceResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            Utils.LoadingScreen.hideLoading()
+                            Toast.makeText(
+                                this@StoryAddActivity,
+                                "Story berhasil di upload",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            finish()
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ServiceResponse>, t: Throwable) {
-                    Utils.LoadingScreen.hideLoading()
-                    Toast.makeText(this@StoryAddActivity, "Gagal upload story", Toast.LENGTH_LONG)
-                        .show()
-                }
-
-            })
-
-
-        } else {
-            Toast.makeText(this@StoryAddActivity, "Gagal upload story", Toast.LENGTH_LONG)
-                .show()
+                    override fun onFailure(call: Call<ServiceResponse>, t: Throwable) {
+                        Utils.LoadingScreen.hideLoading()
+                        Toast.makeText(this@StoryAddActivity, "Gagal upload story", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                })
+            }
         }
     }
 

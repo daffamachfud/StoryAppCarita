@@ -5,20 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputType
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.daffa.storyappcarita.R
 import com.daffa.storyappcarita.databinding.ActivityLoginBinding
 import com.daffa.storyappcarita.model.LoginResponse
 import com.daffa.storyappcarita.model.LoginResult
 import com.daffa.storyappcarita.network.ApiConfig
-import com.daffa.storyappcarita.network.ApiService
 import com.daffa.storyappcarita.util.UserPreference
 import com.daffa.storyappcarita.util.Utils
 import com.daffa.storyappcarita.util.ViewModelFactory
@@ -26,6 +30,7 @@ import com.daffa.storyappcarita.view.main.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -61,13 +66,16 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initAction() {
+        //set button disable ketika data belum terisi
+        binding.emailEditText.addTextChangedListener(textWatcher)
+        binding.passwordEditText.addTextChangedListener(textWatcher)
+
         binding.btnLogin.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-
             when {
                 email.isEmpty() -> {
-                    binding.emailEditTextLayout.error = "Masukkan email"
+                    binding.emailEditText.error = "Masukkan Email"
                 }
                 password.isEmpty() -> {
                     binding.passwordEditText.error = "Masukkan password"
@@ -140,5 +148,40 @@ class LoginActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
+        binding.passwordEditText.background =
+            ContextCompat.getDrawable(this, R.drawable.bg_round_edit)
+        binding.passwordEditText.hint = "Masukan Password"
+        binding.passwordEditText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+        binding.passwordEditText.textSize = 17f
+        binding.passwordEditText.setHintTextColor(ContextCompat.getColor(this, R.color.grey_1))
     }
+
+    private val textWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i2: Int, i3: Int) {}
+        override fun onTextChanged(charSequence: CharSequence, i: Int, i2: Int, i3: Int) {
+            checkFieldIsNotEmpty()
+        }
+
+        override fun afterTextChanged(editable: Editable) {}
+    }
+
+    private fun checkFieldIsNotEmpty() {
+        val email = binding.emailEditText.text.toString()
+        val password = binding.passwordEditText.text.toString()
+        when{
+            email.isEmpty() -> {
+                binding.btnLogin.isEnabled = false
+            }
+            password.isEmpty() -> {
+                binding.btnLogin.isEnabled = false
+            }
+            password.length < 6 -> {
+                binding.btnLogin.isEnabled = false
+            }
+            else -> {
+                binding.btnLogin.isEnabled = true
+            }
+        }
+    }
+
 }

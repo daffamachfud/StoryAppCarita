@@ -99,15 +99,16 @@ class Utils {
 
         return myFile
     }
-
     private fun createCustomTempFile(context: Context): File {
         val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(timeStamp, ".jpg", storageDir)
     }
 
-    fun reduceFileImage(file: File,isBackCamera: Boolean): File {
+    fun reduceFileImage(file: File, isBackCamera: Boolean, isFromGallery: Boolean): File {
         var bitmap = BitmapFactory.decodeFile(file.path)
-        bitmap = rotateBitmap(bitmap, isBackCamera)
+        if(!isFromGallery){
+            bitmap = rotateBitmap(bitmap, isBackCamera)
+        }
 
         var compressQuality = 100
         var streamLength: Int
