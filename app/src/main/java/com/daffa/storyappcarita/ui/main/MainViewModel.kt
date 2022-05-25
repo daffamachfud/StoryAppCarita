@@ -20,20 +20,20 @@ class MainViewModel(private val pref: UserPreference) : ViewModel() {
         return pref.getUser().asLiveData()
     }
 
-    fun getStoriesFromServer(token:String): LiveData<List<ListStoryItem>>{
+    fun getStoriesFromServer(token: String): LiveData<List<ListStoryItem>> {
         ApiConfig.getApiService().getStories(token).enqueue(
-            object : Callback<StoriesResponse>{
+            object : Callback<StoriesResponse> {
                 override fun onResponse(
                     call: Call<StoriesResponse>,
                     response: Response<StoriesResponse>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         listStoryItem.postValue(response.body()?.listStory)
                     }
                 }
 
                 override fun onFailure(call: Call<StoriesResponse>, t: Throwable) {
-                    Log.e("Error Get Stories",t.message.toString())
+                    Log.e("Error Get Stories", t.message.toString())
                 }
 
             }

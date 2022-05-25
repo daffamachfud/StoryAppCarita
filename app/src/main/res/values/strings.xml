@@ -14,4 +14,15 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="galeri">Galeri</string>
+    <string name="camera">Kamera</string>
+    <string name="type_desc">Tulis Keterangan</string>
+    <string name="posting">Posting</string>
+    <string name="input_name">Masukan Nama</string>
+    <string name="input_email">Masukan Email</string>
+    <string name="content_desc_btn_log_out">Tombol logout</string>
+    <string name="username_textview_home">Nama Username</string>
+    <string name="input_password">Masukan Password</string>
+    <string name="description">Description :</string>
+    <string name="username">Username</string>
 </resources>
