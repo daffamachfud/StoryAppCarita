@@ -13,7 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.daffa.storyappcarita.R
 import com.daffa.storyappcarita.databinding.ActivityRegisterBinding
-import com.daffa.storyappcarita.network.ApiService
+import com.daffa.storyappcarita.model.ServiceResponse
+import com.daffa.storyappcarita.network.ApiConfig
 import com.daffa.storyappcarita.util.Utils
 import com.daffa.storyappcarita.view.login.LoginActivity
 import retrofit2.Call
@@ -64,11 +65,11 @@ class RegisterActivity : AppCompatActivity() {
                         "Tunggu Dulu Yah",
                         false
                     )
-                    ApiService.ApiConfig().getApiService().register(name, email, password).enqueue(
-                        object : Callback<ApiService.ResponseService> {
+                    ApiConfig.getApiService().register(name, email, password).enqueue(
+                        object : Callback<ServiceResponse> {
                             override fun onResponse(
-                                call: Call<ApiService.ResponseService>,
-                                response: Response<ApiService.ResponseService>
+                                call: Call<ServiceResponse>,
+                                response: Response<ServiceResponse>
                             ) {
                                 Utils.LoadingScreen.hideLoading()
                                 if (response.isSuccessful) {
@@ -92,7 +93,7 @@ class RegisterActivity : AppCompatActivity() {
                             }
 
                             override fun onFailure(
-                                call: Call<ApiService.ResponseService>,
+                                call: Call<ServiceResponse>,
                                 t: Throwable
                             ) {
                                 Utils.LoadingScreen.hideLoading()

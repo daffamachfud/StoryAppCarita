@@ -12,7 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.daffa.storyappcarita.databinding.ActivityStoryAddBinding
-import com.daffa.storyappcarita.network.ApiService
+import com.daffa.storyappcarita.model.ServiceResponse
+import com.daffa.storyappcarita.network.ApiConfig
 import com.daffa.storyappcarita.util.Utils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -138,7 +139,7 @@ class StoryAddActivity : AppCompatActivity() {
 
     private fun uploadImage() {
         if (getFile != null) {
-            val file = Utils().reduceFileImage(getFile as File,isBackCamera)
+            val file = Utils().reduceFileImage(getFile as File, isBackCamera)
 
             val description = binding.etDesc.text.toString()
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -153,12 +154,12 @@ class StoryAddActivity : AppCompatActivity() {
                 "Tunggul dulu yah",
                 false
             )
-            ApiService.ApiConfig().getApiService().addStory(
+            ApiConfig.getApiService().addStory(
                 "Bearer $token", imageMultipart, description
-            ).enqueue(object : Callback<ApiService.ResponseService> {
+            ).enqueue(object : Callback<ServiceResponse> {
                 override fun onResponse(
-                    call: Call<ApiService.ResponseService>,
-                    response: Response<ApiService.ResponseService>
+                    call: Call<ServiceResponse>,
+                    response: Response<ServiceResponse>
                 ) {
                     if (response.isSuccessful) {
                         Utils.LoadingScreen.hideLoading()
@@ -171,7 +172,7 @@ class StoryAddActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<ApiService.ResponseService>, t: Throwable) {
+                override fun onFailure(call: Call<ServiceResponse>, t: Throwable) {
                     Utils.LoadingScreen.hideLoading()
                     Toast.makeText(this@StoryAddActivity, "Gagal upload story", Toast.LENGTH_LONG)
                         .show()
@@ -180,7 +181,7 @@ class StoryAddActivity : AppCompatActivity() {
             })
 
 
-        }else{
+        } else {
             Toast.makeText(this@StoryAddActivity, "Gagal upload story", Toast.LENGTH_LONG)
                 .show()
         }

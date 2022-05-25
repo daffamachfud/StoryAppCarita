@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.daffa.storyappcarita.databinding.ActivityLoginBinding
 import com.daffa.storyappcarita.model.LoginResponse
 import com.daffa.storyappcarita.model.LoginResult
+import com.daffa.storyappcarita.network.ApiConfig
 import com.daffa.storyappcarita.network.ApiService
 import com.daffa.storyappcarita.util.UserPreference
 import com.daffa.storyappcarita.util.Utils
@@ -78,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
                         false
                     )
 
-                    ApiService.ApiConfig().getApiService().login(email, password).enqueue(
+                    ApiConfig.getApiService().login(email, password).enqueue(
                         object : Callback<LoginResponse> {
                             override fun onResponse(
                                 call: Call<LoginResponse>,

@@ -6,6 +6,7 @@ import com.daffa.storyappcarita.model.ListStoryItem
 import com.daffa.storyappcarita.model.LoginResult
 import com.daffa.storyappcarita.model.StoriesResponse
 import com.daffa.storyappcarita.model.UserModel
+import com.daffa.storyappcarita.network.ApiConfig
 import com.daffa.storyappcarita.network.ApiService
 import com.daffa.storyappcarita.util.UserPreference
 import kotlinx.coroutines.launch
@@ -22,7 +23,7 @@ class MainViewModel(private val pref: UserPreference) : ViewModel() {
     }
 
     fun getStoriesFromServer(token:String): LiveData<List<ListStoryItem>>{
-        ApiService.ApiConfig().getApiService().getStories(token).enqueue(
+        ApiConfig.getApiService().getStories(token).enqueue(
             object : Callback<StoriesResponse>{
                 override fun onResponse(
                     call: Call<StoriesResponse>,
