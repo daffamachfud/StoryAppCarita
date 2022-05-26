@@ -17,7 +17,6 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.WishViewHolder>() {
     fun setStoriesList(stories: List<ListStoryItem>) {
         this.list.clear()
         this.list.addAll(stories)
-
         notifyDataSetChanged()
     }
 

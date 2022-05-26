@@ -101,5 +101,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         loadData()
+        binding.rvStories.smoothScrollToPosition(0)
     }
 }
