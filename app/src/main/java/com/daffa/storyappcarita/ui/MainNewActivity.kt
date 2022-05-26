@@ -1,7 +1,11 @@
 package com.daffa.storyappcarita.ui
 
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -11,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.daffa.storyappcarita.R
 import com.daffa.storyappcarita.databinding.ActivityMainNewBinding
+import com.daffa.storyappcarita.ui.landing.LandingActivity
 import com.daffa.storyappcarita.ui.main.MainViewModel
 import com.daffa.storyappcarita.util.UserPreference
 import com.daffa.storyappcarita.util.ViewModelFactory
@@ -30,12 +35,18 @@ class MainNewActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main_new)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         navView.setupWithNavController(navController)
-
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+           window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
         initViewModel()
     }
 
@@ -45,7 +56,14 @@ class MainNewActivity : AppCompatActivity() {
             ViewModelFactory(UserPreference.getInstance(dataStore))
         )[MainViewModel::class.java]
         mainViewModel.getUser().observe(this) {
-            binding.tvUsername.text = it.name
+            if (it.token?.isNotEmpty() == true) {
+                println("onresponse 1")
+                binding.tvUsername.text = it.name
+            }else{
+                println("onresponse 2")
+                startActivity(Intent(this, LandingActivity::class.java))
+                finish()
+            }
         }
 
     }

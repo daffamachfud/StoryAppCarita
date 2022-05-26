@@ -1,4 +1,4 @@
-package com.daffa.storyappcarita.model
+package com.daffa.storyappcarita.model.response
 
 import com.google.gson.annotations.SerializedName
 

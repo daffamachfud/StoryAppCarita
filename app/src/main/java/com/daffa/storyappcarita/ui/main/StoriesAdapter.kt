@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.daffa.storyappcarita.databinding.ItemStoryAdapterBinding
-import com.daffa.storyappcarita.model.ListStoryItem
+import com.daffa.storyappcarita.model.response.ListStoryItem
 import com.daffa.storyappcarita.ui.detail.DetailActivity
 
 class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.WishViewHolder>() {

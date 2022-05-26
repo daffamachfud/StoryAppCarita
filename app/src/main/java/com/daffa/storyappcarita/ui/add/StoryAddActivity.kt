@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.daffa.storyappcarita.databinding.ActivityStoryAddBinding
-import com.daffa.storyappcarita.model.ServiceResponse
+import com.daffa.storyappcarita.model.response.ServiceResponse
 import com.daffa.storyappcarita.network.ApiConfig
 import com.daffa.storyappcarita.util.Utils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

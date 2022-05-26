@@ -2,9 +2,9 @@ package com.daffa.storyappcarita.ui.main
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.daffa.storyappcarita.model.ListStoryItem
-import com.daffa.storyappcarita.model.LoginResult
-import com.daffa.storyappcarita.model.StoriesResponse
+import com.daffa.storyappcarita.model.response.ListStoryItem
+import com.daffa.storyappcarita.model.response.LoginResult
+import com.daffa.storyappcarita.model.response.StoriesResponse
 import com.daffa.storyappcarita.network.ApiConfig
 import com.daffa.storyappcarita.util.UserPreference
 import kotlinx.coroutines.launch

@@ -20,14 +20,13 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.daffa.storyappcarita.R
 import com.daffa.storyappcarita.databinding.ActivityLoginBinding
-import com.daffa.storyappcarita.model.LoginResponse
-import com.daffa.storyappcarita.model.LoginResult
+import com.daffa.storyappcarita.model.response.LoginResponse
+import com.daffa.storyappcarita.model.response.LoginResult
 import com.daffa.storyappcarita.network.ApiConfig
 import com.daffa.storyappcarita.ui.MainNewActivity
 import com.daffa.storyappcarita.util.UserPreference
 import com.daffa.storyappcarita.util.Utils
 import com.daffa.storyappcarita.util.ViewModelFactory
-import com.daffa.storyappcarita.ui.main.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

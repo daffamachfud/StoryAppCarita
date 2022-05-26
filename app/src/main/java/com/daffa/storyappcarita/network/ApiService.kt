@@ -1,8 +1,8 @@
 package com.daffa.storyappcarita.network
 
-import com.daffa.storyappcarita.model.LoginResponse
-import com.daffa.storyappcarita.model.ServiceResponse
-import com.daffa.storyappcarita.model.StoriesResponse
+import com.daffa.storyappcarita.model.response.LoginResponse
+import com.daffa.storyappcarita.model.response.ServiceResponse
+import com.daffa.storyappcarita.model.response.StoriesResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -33,6 +33,6 @@ interface ApiService {
 
     @GET("stories")
     fun getStories(
-        @Header("Authorization") authHeader: String
+        @Header("Authorization") authHeader: String,
     ): Call<StoriesResponse>
 }
