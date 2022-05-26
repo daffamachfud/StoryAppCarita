@@ -53,6 +53,10 @@ class StoryAddActivity : AppCompatActivity() {
             )
         }
 
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
         binding
             .btnCamera.setOnClickListener {
                 startCamera()
