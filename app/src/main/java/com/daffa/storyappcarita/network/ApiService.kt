@@ -1,5 +1,6 @@
 package com.daffa.storyappcarita.network
 
+import com.daffa.storyappcarita.model.response.ListStoryItem
 import com.daffa.storyappcarita.model.response.LoginResponse
 import com.daffa.storyappcarita.model.response.ServiceResponse
 import com.daffa.storyappcarita.model.response.StoriesResponse
@@ -35,4 +36,11 @@ interface ApiService {
     fun getStories(
         @Header("Authorization") authHeader: String,
     ): Call<StoriesResponse>
+
+    @GET("stories")
+    suspend fun getNewStories(
+        @Header("Authorization") authHeader: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): StoriesResponse
 }

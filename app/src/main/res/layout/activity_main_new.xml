@@ -34,28 +34,15 @@
 
 
     <ImageView
-        android:id="@+id/btnLogout"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:id="@+id/btnAddStories"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_baseline_login_24"
+        android:src="@drawable/ic_baseline_add_to_photos_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_condensed_bold"
-        android:text="Nama Username"
-        android:textColor="@color/primary"
-        android:textSize="16sp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/btnLogout"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
         android:id="@+id/nav_host_fragment_activity_main_new"

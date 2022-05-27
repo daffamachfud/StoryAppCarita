@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.daffa.storyappcarita.R
 import com.daffa.storyappcarita.databinding.ActivityMainNewBinding
+import com.daffa.storyappcarita.ui.add.StoryAddActivity
 import com.daffa.storyappcarita.ui.landing.LandingActivity
 import com.daffa.storyappcarita.ui.main.MainViewModel
 import com.daffa.storyappcarita.util.UserPreference
@@ -27,6 +28,7 @@ class MainNewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainNewBinding
     private lateinit var mainViewModel: MainViewModel
+    private var tokenIntent = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,25 +43,34 @@ class MainNewActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
-           window.setFlags(
+            window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
         supportActionBar?.hide()
+
         initViewModel()
+        initAction()
+    }
+
+    private fun initAction() {
+        binding.btnAddStories.setOnClickListener {
+            val intent = Intent(this@MainNewActivity, StoryAddActivity::class.java)
+            intent.putExtra(StoryAddActivity.TOKEN, tokenIntent)
+            startActivity(intent)
+        }
     }
 
     private fun initViewModel() {
         mainViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory(UserPreference.getInstance(dataStore), this)
         )[MainViewModel::class.java]
         mainViewModel.getUser().observe(this) {
             if (it.token?.isNotEmpty() == true) {
-                println("onresponse 1")
-                binding.tvUsername.text = it.name
-            }else{
+                tokenIntent = it.token
+            } else {
                 println("onresponse 2")
                 startActivity(Intent(this, LandingActivity::class.java))
                 finish()

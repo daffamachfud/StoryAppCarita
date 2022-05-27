@@ -1,13 +1,23 @@
 package com.daffa.storyappcarita.ui.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.daffa.storyappcarita.data.StoryRepository
+import com.daffa.storyappcarita.model.response.ListStoryItem
+import com.daffa.storyappcarita.model.response.LoginResult
+import com.daffa.storyappcarita.util.UserPreference
 
-class ListViewModel : ViewModel() {
+class ListViewModel(
+    private val storyRepository: StoryRepository,
+    private val pref: UserPreference
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    fun getPagingStories(token: String): LiveData<PagingData<ListStoryItem>> {
+        return storyRepository.getAllStories(token).cachedIn(viewModelScope)
     }
-    val text: LiveData<String> = _text
+
+    fun getUser(): LiveData<LoginResult> {
+        return pref.getUser().asLiveData()
+    }
 }

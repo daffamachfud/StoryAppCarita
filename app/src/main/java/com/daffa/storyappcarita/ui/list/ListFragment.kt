@@ -1,46 +1,70 @@
 package com.daffa.storyappcarita.ui.list
 
-import android.os.Build
+import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
-import android.view.*
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffa.storyappcarita.databinding.FragmentListBinding
-import com.daffa.storyappcarita.ui.main.MainViewModel
-import com.daffa.storyappcarita.ui.main.StoriesAdapter
+import com.daffa.storyappcarita.util.UserPreference
+import com.daffa.storyappcarita.util.ViewModelFactory
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class ListFragment : Fragment() {
-
-    private var _binding: FragmentListBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var mainViewModel: MainViewModel
-    private val storiesAdapter = StoriesAdapter()
-    private var tokenIntent = ""
+    private lateinit var binding: FragmentListBinding
+    private lateinit var viewModel: ListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        _binding = FragmentListBinding.inflate(inflater, container, false)
-        initView()
-        initViewModel()
+        binding = FragmentListBinding.inflate(inflater, container, false)
+        val dataStore = requireContext().dataStore
+        initViewModel(dataStore)
+        initData()
         return binding.root
     }
 
-    private fun initViewModel() {
+    private fun initData() {
+        binding.rvStories.visibility = View.GONE
+        binding.loadingMain.visibility = View.VISIBLE
 
+        val adapter = ListAdapter()
+        binding.rvStories.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvStories.adapter = adapter.withLoadStateFooter(
+            footer = LoadingListAdapter {
+                adapter.retry()
+            }
+        )
+        viewModel.getUser().observe(requireActivity()) {
+            if (it.token != null) {
+                viewModel.getPagingStories("Bearer ${it.token}").observe(requireActivity()) { result ->
+                    binding.rvStories.visibility = View.VISIBLE
+                    binding.loadingMain.visibility = View.GONE
+                    adapter.submitData(lifecycle, result)
+                }
+            } else {
+                Toast.makeText(requireContext(), "Gagal mengambil data stories", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
-    private fun initView() {
-
+    private fun initViewModel(dataStore: DataStore<Preferences>) {
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreference.getInstance(dataStore), requireContext())
+        )[ListViewModel::class.java]
     }
 
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

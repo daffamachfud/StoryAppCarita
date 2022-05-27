@@ -14,10 +14,10 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daffa.storyappcarita.databinding.ActivityMainBinding
-import com.daffa.storyappcarita.util.UserPreference
-import com.daffa.storyappcarita.util.ViewModelFactory
 import com.daffa.storyappcarita.ui.add.StoryAddActivity
 import com.daffa.storyappcarita.ui.landing.LandingActivity
+import com.daffa.storyappcarita.util.UserPreference
+import com.daffa.storyappcarita.util.ViewModelFactory
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener {
             val intent = Intent(this@MainActivity, StoryAddActivity::class.java)
-            intent.putExtra(StoryAddActivity.TOKEN,tokenIntent)
+            intent.putExtra(StoryAddActivity.TOKEN, tokenIntent)
             startActivity(intent)
         }
     }
@@ -53,13 +53,13 @@ class MainActivity : AppCompatActivity() {
     private fun initViewModel() {
         mainViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory(UserPreference.getInstance(dataStore), this@MainActivity)
         )[MainViewModel::class.java]
 
         binding.loadingMain.visibility = View.VISIBLE
         loadData()
 
-        with(binding.rvStories){
+        with(binding.rvStories) {
             adapter = storiesAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
@@ -79,13 +79,13 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    private fun loadData(){
+    private fun loadData() {
         mainViewModel.getUser().observe(this) { user ->
             if (user.token?.isNotEmpty() == true) {
                 tokenIntent = user.token
-                mainViewModel.getStoriesFromServer("Bearer ${user.token}").observe(this) { list->
+                mainViewModel.getStoriesFromServer("Bearer ${user.token}").observe(this) { list ->
                     binding.loadingMain.visibility = View.GONE
-                    if(list.isNotEmpty()){
+                    if (list.isNotEmpty()) {
                         storiesAdapter.setStoriesList(list)
                         binding.rvStories.visibility = View.VISIBLE
                     }
