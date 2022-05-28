@@ -9,26 +9,28 @@
     <string name="name">Nama</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industr standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
-    <string name="title_activity_main_new">MainNewActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="galeri">Galeri</string>
+    <string name="lorem" translatable="false">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industr standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="title_activity_main_new" translatable="false">MainNewActivity</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
+    <string name="title_notifications" translatable="false">Notifications</string>
+    <string name="galeri" translatable="false">Galeri</string>
     <string name="camera">Kamera</string>
     <string name="type_desc">Tulis Keterangan</string>
-    <string name="posting">Posting</string>
+    <string name="posting" translatable="false">Posting</string>
     <string name="input_name">Masukan Nama</string>
     <string name="input_email">Masukan Email</string>
     <string name="content_desc_btn_log_out">Tombol logout</string>
     <string name="username_textview_home">Nama Username</string>
     <string name="input_password">Masukan Password</string>
-    <string name="description">Description :</string>
-    <string name="username">Username</string>
-    <string name="story_map">Story Map</string>
-    <string name="story_list">Story List</string>
+    <string name="description" translatable="false">Description :</string>
+    <string name="username" translatable="false">Username</string>
+    <string name="story_map" translatable="false">Story Map</string>
+    <string name="story_list" translatable="false">Story List</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="story_setting">Story Setting</string>
-    <string name="story_add">Story Add</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="story_setting" translatable="false">Story Setting</string>
+    <string name="story_add" translatable="false">Story Add</string>
+    <string name="change_languange">Ubah Bahasa</string>
+    <string name="log_out" translatable="false">Log out</string>
 </resources>

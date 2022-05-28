@@ -5,17 +5,18 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_story_map">
 
-    <fragment
-        android:id="@+id/navigation_story_map"
-        android:name="com.daffa.storyappcarita.ui.map.MapFragment"
-        android:label="@string/story_map"
-        tools:layout="@layout/fragment_map" />
 
     <fragment
         android:id="@+id/navigation_story_list"
         android:name="com.daffa.storyappcarita.ui.list.ListFragment"
         android:label="@string/story_list"
         tools:layout="@layout/fragment_list" />
+
+    <fragment
+        android:id="@+id/navigation_story_map"
+        android:name="com.daffa.storyappcarita.ui.map.MapFragment"
+        android:label="@string/story_map"
+        tools:layout="@layout/fragment_map" />
 
     <fragment
         android:id="@+id/navigation_story_setting"

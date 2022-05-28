@@ -3,8 +3,10 @@ package com.daffa.storyappcarita.ui.map
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,10 +28,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -72,10 +73,33 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isIndoorLevelPickerEnabled = true
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
+        mMap.setOnMarkerClickListener {
+            if(it.snippet != null){
+                val modalBottomSheet = MapBottomSheetFragment(it.snippet)
+                modalBottomSheet.show(childFragmentManager, MapBottomSheetFragment.TAG)
+                Toast.makeText(requireContext(),"Memuat Gambar",Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(requireContext(),"Story tidak punya gambar",Toast.LENGTH_LONG).show()
+            }
+            true
+        }
+        try {
+            val success =
+                mMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                        requireContext(),
+                        R.raw.map_style
+                    )
+                )
+            if (!success) {
+                Log.e("onFailure", "Style Parsing Failed.")
+            }
+        } catch (exception: Resources.NotFoundException) {
+            Log.e("onFailure", "Can't find style. Error: ", exception)
+        }
 
         getMyLastLocation()
         getLocationStories()
@@ -94,6 +118,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                 MarkerOptions()
                                     .position(location)
                                     .title(data.name)
+                                    .snippet(data.photoUrl)
                             )
                             mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
                         }
@@ -162,9 +187,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap.addMarker(
             MarkerOptions()
                 .position(startLocation)
-                .title("My Location").icon(BitmapDescriptorFactory.defaultMarker(
-                    BitmapDescriptorFactory.HUE_ORANGE))
+                .title("My Location").icon(
+                    BitmapDescriptorFactory.defaultMarker(
+                        BitmapDescriptorFactory.HUE_ORANGE
+                    )
+                )
         )
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLocation, 17f))
     }
+
+
+
 }

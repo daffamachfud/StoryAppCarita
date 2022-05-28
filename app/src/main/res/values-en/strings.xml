@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryAppCarita</string>
+    <string name="content_desc_logo_app">Logo apps carita</string>
+    <string name="content_desc_image">Pictrure Landing</string>
+    <string name="welcome_app">Welcome on Carita App</string>
+    <string name="desc_landing">"Carita is social media platform "</string>
+    <string name="register">List</string>
+    <string name="login">Login</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="camera">Camera</string>
+    <string name="type_desc">Type description</string>
+    <string name="input_name">Input Name</string>
+    <string name="input_email">Input Email</string>
+    <string name="content_desc_btn_log_out">Button Logout</string>
+    <string name="username_textview_home">Username</string>
+    <string name="input_password">Input Password</string>
+    <string name="change_languange">Change Language</string>
+</resources>
