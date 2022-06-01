@@ -8,6 +8,7 @@ import com.daffa.storyappcarita.ui.list.ListViewModel
 import com.daffa.storyappcarita.ui.login.UserViewModel
 import com.daffa.storyappcarita.ui.main.MainViewModel
 import com.daffa.storyappcarita.ui.map.MapViewModel
+import com.daffa.storyappcarita.ui.setting.SettingViewModel
 
 class ViewModelFactory(private val pref: UserPreference, private val context: Context) :
     ViewModelProvider.NewInstanceFactory() {
@@ -16,16 +17,19 @@ class ViewModelFactory(private val pref: UserPreference, private val context: Co
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(Injection.provideRepository(context) ,pref) as T
+                MainViewModel(pref) as T
             }
             modelClass.isAssignableFrom(UserViewModel::class.java) -> {
                 UserViewModel(pref) as T
             }
             modelClass.isAssignableFrom(ListViewModel::class.java) -> {
-                ListViewModel(Injection.provideRepository(context) ,pref) as T
+                ListViewModel(Injection.provideRepository(context), pref) as T
             }
             modelClass.isAssignableFrom(MapViewModel::class.java) -> {
-                MapViewModel(Injection.provideRepository(context) ,pref) as T
+                MapViewModel(Injection.provideRepository(context), pref) as T
+            }
+            modelClass.isAssignableFrom(SettingViewModel::class.java) -> {
+                SettingViewModel(pref) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

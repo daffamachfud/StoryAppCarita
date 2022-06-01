@@ -29,8 +29,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -77,12 +75,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
         mMap.setOnMarkerClickListener {
-            if(it.snippet != null){
+            if (it.snippet != null) {
                 val modalBottomSheet = MapBottomSheetFragment(it.snippet)
                 modalBottomSheet.show(childFragmentManager, MapBottomSheetFragment.TAG)
-                Toast.makeText(requireContext(),"Memuat Gambar",Toast.LENGTH_LONG).show()
-            }else{
-                Toast.makeText(requireContext(),"Story tidak punya gambar",Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Memuat Gambar", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(requireContext(), "Story tidak punya gambar", Toast.LENGTH_LONG)
+                    .show()
             }
             true
         }
@@ -108,21 +107,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun getLocationStories() {
         viewModel.getUser().observe(requireActivity()) {
             if (it.token != null) {
-                viewModel.getAllStoriesMap("Bearer ${it.token}")
-                    .observe(requireActivity()) { result ->
-                        result.forEach { data ->
-                            val location = LatLng(data.lat, data.lon)
-                            boundsBuilder.include(location)
-                            val bounds: LatLngBounds = boundsBuilder.build()
-                            mMap.addMarker(
-                                MarkerOptions()
-                                    .position(location)
-                                    .title(data.name)
-                                    .snippet(data.photoUrl)
-                            )
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
+                if (view != null) {
+                    viewModel.getAllStoriesMap("Bearer ${it.token}")
+                        .observe(viewLifecycleOwner) { result ->
+                            result.forEach { data ->
+                                val location = LatLng(data.lat, data.lon)
+                                boundsBuilder.include(location)
+                                val bounds: LatLngBounds = boundsBuilder.build()
+                                mMap.addMarker(
+                                    MarkerOptions()
+                                        .position(location)
+                                        .title(data.name)
+                                        .snippet(data.photoUrl)
+                                )
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10))
+                            }
                         }
-                    }
+                }
             } else {
                 Toast.makeText(requireContext(), "Gagal mengambil data stories", Toast.LENGTH_LONG)
                     .show()
@@ -171,10 +172,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
                     // Precise location access granted.
                     getMyLastLocation()
+                    getLocationStories()
                 }
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
                     // Only approximate location access granted.
                     getMyLastLocation()
+                    getLocationStories()
                 }
                 else -> {
                     // No location access granted.
@@ -195,7 +198,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         )
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLocation, 17f))
     }
-
 
 
 }

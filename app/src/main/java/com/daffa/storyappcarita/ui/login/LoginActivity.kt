@@ -23,7 +23,7 @@ import com.daffa.storyappcarita.databinding.ActivityLoginBinding
 import com.daffa.storyappcarita.model.response.LoginResponse
 import com.daffa.storyappcarita.model.response.LoginResult
 import com.daffa.storyappcarita.network.ApiConfig
-import com.daffa.storyappcarita.ui.MainNewActivity
+import com.daffa.storyappcarita.ui.main.MainActivity
 import com.daffa.storyappcarita.util.UserPreference
 import com.daffa.storyappcarita.util.Utils
 import com.daffa.storyappcarita.util.ViewModelFactory
@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initViewModel() {
         viewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore),this)
+            ViewModelFactory(UserPreference.getInstance(dataStore), this)
         )[UserViewModel::class.java]
     }
 
@@ -100,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
                                         saveUserResponse(userId, name, token)
                                     }
                                     val intent =
-                                        Intent(this@LoginActivity, MainNewActivity::class.java)
+                                        Intent(this@LoginActivity, MainActivity::class.java)
                                     intent.flags =
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     startActivity(intent)
@@ -168,7 +168,7 @@ class LoginActivity : AppCompatActivity() {
     private fun checkFieldIsNotEmpty() {
         val email = binding.emailEditText.text.toString()
         val password = binding.passwordEditText.text.toString()
-        when{
+        when {
             email.isEmpty() -> {
                 binding.btnLogin.isEnabled = false
             }

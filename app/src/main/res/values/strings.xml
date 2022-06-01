@@ -14,7 +14,7 @@
     <string name="title_home" translatable="false">Home</string>
     <string name="title_dashboard" translatable="false">Dashboard</string>
     <string name="title_notifications" translatable="false">Notifications</string>
-    <string name="galeri" translatable="false">Galeri</string>
+    <string name="galeri">Galeri</string>
     <string name="camera">Kamera</string>
     <string name="type_desc">Tulis Keterangan</string>
     <string name="posting" translatable="false">Posting</string>
