@@ -76,7 +76,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap.uiSettings.isMapToolbarEnabled = true
         mMap.setOnMarkerClickListener {
             if (it.snippet != null) {
-                val modalBottomSheet = MapBottomSheetFragment(it.snippet)
+                val modalBottomSheet = MapBottomSheetFragment(it.snippet,it.title)
                 modalBottomSheet.show(childFragmentManager, MapBottomSheetFragment.TAG)
                 Toast.makeText(requireContext(), "Memuat Gambar", Toast.LENGTH_LONG).show()
             } else {

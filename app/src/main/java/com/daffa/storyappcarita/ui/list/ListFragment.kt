@@ -29,10 +29,14 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val dataStore = requireContext().dataStore
         initViewModel(dataStore)
         initData()
-        return binding.root
     }
 
     private fun initData() {
@@ -65,6 +69,11 @@ class ListFragment : Fragment() {
             this,
             ViewModelFactory(UserPreference.getInstance(dataStore), requireContext())
         )[ListViewModel::class.java]
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.rvStories.smoothScrollToPosition(0)
     }
 
 }

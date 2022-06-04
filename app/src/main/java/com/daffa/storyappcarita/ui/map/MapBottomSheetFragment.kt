@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.daffa.storyappcarita.databinding.FragmentMapBottomSheetListDialogBinding
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class MapBottomSheetFragment(private val snippet: String?) : BottomSheetDialogFragment() {
+
+class MapBottomSheetFragment(private val snippet: String?,private val title: String?) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentMapBottomSheetListDialogBinding? = null
 
@@ -21,10 +22,11 @@ class MapBottomSheetFragment(private val snippet: String?) : BottomSheetDialogFr
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentMapBottomSheetListDialogBinding.inflate(inflater, container, false)
+        binding.tvUsername.text = title
         Glide.with(requireActivity())
             .load(snippet)
+            .apply(RequestOptions().override(500, 500))
             .into(binding.imageView)
         return binding.root
     }
