@@ -22,6 +22,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class ListFragment : Fragment() {
     private lateinit var binding: FragmentListBinding
     private lateinit var viewModel: ListViewModel
+    private val adapter = ListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,14 +43,29 @@ class ListFragment : Fragment() {
     private fun initData() {
         binding.rvStories.visibility = View.GONE
         binding.loadingMain.visibility = View.VISIBLE
-
-        val adapter = ListAdapter()
         binding.rvStories.layoutManager = LinearLayoutManager(requireContext())
         binding.rvStories.adapter = adapter.withLoadStateFooter(
             footer = LoadingListAdapter {
                 adapter.retry()
             }
         )
+        loadData()
+    }
+
+    private fun initViewModel(dataStore: DataStore<Preferences>) {
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreference.getInstance(dataStore), requireContext())
+        )[ListViewModel::class.java]
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadData()
+        binding.rvStories.smoothScrollToPosition(0)
+    }
+
+    private fun loadData(){
         viewModel.getUser().observe(requireActivity()) {
             if (it.token != null) {
                 viewModel.getPagingStories("Bearer ${it.token}").observe(requireActivity()) { result ->
@@ -62,18 +78,6 @@ class ListFragment : Fragment() {
                     .show()
             }
         }
-    }
-
-    private fun initViewModel(dataStore: DataStore<Preferences>) {
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreference.getInstance(dataStore), requireContext())
-        )[ListViewModel::class.java]
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.rvStories.smoothScrollToPosition(0)
     }
 
 }
